@@ -352,6 +352,17 @@ So: 143.</pre>
 
   <hr class="divider">
 
+  <h2>Your JSON Schemas Still Work</h2>
+
+  <p>The #1 concern with any JSON alternative: "What about my schemas?" GCF decodes losslessly to JSON. Validate on the decoded side. Nothing changes:</p>
+
+  <pre>data = decode_generic(gcf_response)         # GCF -> native object
+jsonschema.validate(data, existing_schema)   # your schema, unchanged</pre>
+
+  <p>OpenAI structured outputs, Anthropic tool definitions, LangChain, CrewAI: all work. GCF is transparent to the validator. The wire encoding changed; the data structure didn't. <a href="https://gcformat.com/guide/schema-validation" style="color:#60a5fa">Full guide</a>.</p>
+
+  <hr class="divider">
+
   <h2>TOON's Own Benchmark: GCF Wins All 6 Datasets</h2>
 
   <p>We forked TOON's benchmark repository, added a GCF formatter, and ran their datasets with their tokenizer and their methodology.</p>
@@ -389,21 +400,6 @@ So: 143.</pre>
   <div class="verdict">
     <p>JSON was designed for humans to read. TOON was designed as a compromise between humans and machines. GCF was designed for the machine. It's a proven lossless JSON encoding: <code>decode(encode(value)) == value</code> for every JSON value, verified across 200M+ random inputs and 7.9M fuzz executions. The consumer of your API responses is not a human. Optimize for the reader that matters.</p>
   </div>
-
-  <hr class="divider">
-
-  <h2>JSON Schema Works Unchanged</h2>
-
-  <p>"What about my schemas?" GCF round-trips losslessly to JSON. Validate on the decoded side using the same JSON Schema tooling you already have.</p>
-
-  <pre>data = decode_generic(gcf_response)
-jsonschema.validate(data, your_existing_schema)  # no changes needed</pre>
-
-  <p>OpenAI structured outputs, Anthropic tool definitions, LangChain, CrewAI: all work unchanged. The schema validates the data structure, not the wire encoding. GCF is transparent to the validator.</p>
-
-  <p><strong>Example:</strong> An AI travel agent calls <code>search_flights</code> (returns GCF, 79% fewer tokens), decodes and validates against <code>FlightSearchResult</code> schema, selects a flight, calls <code>book_flight</code> with arguments validated against <code>BookFlightRequest</code> schema. Every step has a schema. GCF makes the wire transfer cheap; JSON Schema makes it correct.</p>
-
-  <p><a href="https://gcformat.com/guide/schema-validation" style="color:#60a5fa">Full guide with code examples in Python, TypeScript, and Go</a>.</p>
 
   <hr class="divider">
 
