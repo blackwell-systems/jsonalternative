@@ -392,6 +392,21 @@ So: 143.</pre>
 
   <hr class="divider">
 
+  <h2>JSON Schema Works Unchanged</h2>
+
+  <p>"What about my schemas?" GCF round-trips losslessly to JSON. Validate on the decoded side using the same JSON Schema tooling you already have.</p>
+
+  <pre>data = decode_generic(gcf_response)
+jsonschema.validate(data, your_existing_schema)  # no changes needed</pre>
+
+  <p>OpenAI structured outputs, Anthropic tool definitions, LangChain, CrewAI: all work unchanged. The schema validates the data structure, not the wire encoding. GCF is transparent to the validator.</p>
+
+  <p><strong>Example:</strong> An AI travel agent calls <code>search_flights</code> (returns GCF, 79% fewer tokens), decodes and validates against <code>FlightSearchResult</code> schema, selects a flight, calls <code>book_flight</code> with arguments validated against <code>BookFlightRequest</code> schema. Every step has a schema. GCF makes the wire transfer cheap; JSON Schema makes it correct.</p>
+
+  <p><a href="https://gcformat.com/guide/schema-validation" style="color:#60a5fa">Full guide with code examples in Python, TypeScript, and Go</a>.</p>
+
+  <hr class="divider">
+
   <h2>Reproduce Everything</h2>
 
   <p>The eval is open source. Every result is committed. Every log file is in the repository.</p>
