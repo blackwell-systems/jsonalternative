@@ -6,9 +6,9 @@
 
 ## Why JSON needs an alternative for AI
 
-JSON was designed in 2001 for browser-to-server communication. At 500 records, LLMs score 54.6% comprehension accuracy on JSON. GPT-5.5 returns empty strings. Claude Opus spends 143 lines manually enumerating symbols and still gets the wrong answer.
+JSON was designed in 2001 for browser-to-server communication. At 500 records, LLMs score 54.1% comprehension accuracy on JSON. GPT-5.5 returns empty strings. Claude Opus spends 143 lines manually enumerating symbols and still gets the wrong answer.
 
-GCF averages 91.6% comprehension accuracy. 79% fewer tokens. Four models hit 100%. Zero training required.
+GCF averages 91.2% comprehension accuracy. 79% fewer tokens. Four models hit 100%. Zero training required.
 
 ## Links
 
